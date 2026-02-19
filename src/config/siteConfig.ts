@@ -12,9 +12,10 @@ export const siteConfig = {
   },
   hero: {
     images: [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1920&q=80",
-      "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1920&q=80",
-      "https://images.unsplash.com/photo-1608198093002-ed4e0036ece1?w=1920&q=80",
+      "img/M1.jpeg",
+      "img/M2.jpeg",
+      "img/M3.jpeg",
+      
     ],
     animatedTexts: [
       "El arte de la paciencia en cada hogaza.",
