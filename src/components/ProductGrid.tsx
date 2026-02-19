@@ -1,4 +1,4 @@
-import { ShoppingBag, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
 interface Product {
