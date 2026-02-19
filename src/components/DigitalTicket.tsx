@@ -1,17 +1,31 @@
 import { X } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
+interface CartItem {
+  id: string;
+  name: string;
+  nameEs: string;
+  description: string;
+  price: number;
+  currency: string;
+  image: string;
+  quantity: number;
+}
+
 interface DigitalTicketProps {
-  product: typeof siteConfig.products[0];
+  cartItems: CartItem[];
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function DigitalTicket({ product, isOpen, onClose }: DigitalTicketProps) {
+export default function DigitalTicket({ cartItems, isOpen, onClose }: DigitalTicketProps) {
   if (!isOpen) return null;
 
   // Generate random order ID
   const orderId = `PM-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
+  
+  // Calculate total
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div 
@@ -64,25 +78,31 @@ export default function DigitalTicket({ product, isOpen, onClose }: DigitalTicke
             </div>
           </div>
 
-          {/* Product Info */}
-          <div className="mb-6">
-            <div className="flex gap-6 mb-4">
-              <img
-                src={product.image}
-                alt={product.nameEs}
-                className="w-32 h-32 object-cover rounded-xl"
-              />
-              <div className="flex-1">
-                <h3 className="font-heading text-2xl font-bold text-primary mb-2">
-                  {product.nameEs}
-                </h3>
-                <p className="text-primary/70 text-sm mb-4">{product.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-primary/70">Cantidad:</span>
-                  <span className="font-bold text-primary">1</span>
+          {/* Cart Items */}
+          <div className="mb-6 space-y-4">
+            {cartItems.map((item) => (
+              <div key={item.id} className="flex gap-6 pb-4 border-b border-primary/10">
+                <img
+                  src={item.image}
+                  alt={item.nameEs}
+                  className="w-32 h-32 object-cover rounded-xl flex-shrink-0"
+                />
+                <div className="flex-1">
+                  <h3 className="font-heading text-xl font-bold text-primary mb-2">
+                    {item.nameEs}
+                  </h3>
+                  <p className="text-primary/70 text-sm mb-2">{item.description}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-primary/70 text-sm">
+                      Cantidad: <span className="font-bold text-primary">{item.quantity}</span>
+                    </span>
+                    <span className="font-heading text-xl font-bold text-accent">
+                      ${item.price * item.quantity} {item.currency}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
 
           {/* Total */}
@@ -92,14 +112,14 @@ export default function DigitalTicket({ product, isOpen, onClose }: DigitalTicke
                 Total:
               </span>
               <span className="font-heading text-3xl font-bold text-accent">
-                ${product.price} {product.currency}
+                ${total} {cartItems[0]?.currency || 'MXN'}
               </span>
             </div>
           </div>
 
           {/* Footer Note */}
           <div className="mt-8 pt-6 border-t border-primary/10">
-            <p className="text-center text-primary/60 text-sm italic">
+            <p className="text-center text-primary/60 text-sm italic font-body">
               Gracias por tu compra. Presenta este ticket al recoger tu pedido.
             </p>
           </div>
@@ -108,4 +128,3 @@ export default function DigitalTicket({ product, isOpen, onClose }: DigitalTicke
     </div>
   );
 }
-

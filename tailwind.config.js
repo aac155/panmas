@@ -10,6 +10,7 @@ export default {
         primary: '#4A3728',
         accent: '#D4A373',
         background: '#F9F7F2',
+        'nav-bg': '#FDF5E6',
       },
       fontFamily: {
         heading: ['Playfair Display', 'serif'],
