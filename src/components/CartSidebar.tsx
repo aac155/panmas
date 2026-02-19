@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
@@ -30,7 +30,7 @@ export default function CartSidebar({
 }: CartSidebarProps) {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const sidebarVariants = {
+  const sidebarVariants: Variants = {
     hidden: {
       x: '100%',
       opacity: 0,
@@ -39,7 +39,7 @@ export default function CartSidebar({
       x: 0,
       opacity: 1,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         damping: 25,
         stiffness: 200,
       },
@@ -48,14 +48,14 @@ export default function CartSidebar({
       x: '100%',
       opacity: 0,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         damping: 25,
         stiffness: 200,
       },
     },
   };
 
-  const overlayVariants = {
+  const overlayVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
     exit: { opacity: 0 },
