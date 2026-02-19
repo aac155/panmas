@@ -6,7 +6,7 @@ import About from './components/About';
 import ProductGrid from './components/ProductGrid';
 import Location from './components/Location';
 import Footer from './components/Footer';
-import DigitalTicket from './components/DigitalTicket';
+import CartSidebar from './components/CartSidebar';
 import { siteConfig } from './config/siteConfig';
 
 interface CartItem {
@@ -23,7 +23,7 @@ interface CartItem {
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [isTicketOpen, setIsTicketOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addToCart = (product: typeof siteConfig.products[0]) => {
     setCart((prevCart) => {
@@ -51,14 +51,30 @@ function App() {
         ];
       }
     });
+    // Open cart sidebar when adding a product
+    setIsCartOpen(true);
+  };
+
+  const updateCartItemQuantity = (id: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(id);
+      return;
+    }
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const removeFromCart = (id: string) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleCartClick = () => {
-    if (cart.length > 0) {
-      setIsTicketOpen(true);
-    }
+    setIsCartOpen(true);
   };
 
   return (
@@ -87,10 +103,12 @@ function App() {
 
       <Footer />
 
-      <DigitalTicket
+      <CartSidebar
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
         cartItems={cart}
-        isOpen={isTicketOpen}
-        onClose={() => setIsTicketOpen(false)}
+        onUpdateQuantity={updateCartItemQuantity}
+        onRemoveItem={removeFromCart}
       />
     </div>
   );
