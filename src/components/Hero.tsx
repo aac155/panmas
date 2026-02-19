@@ -1,36 +1,53 @@
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '../config/siteConfig';
 
 export default function Hero() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
+  // Change image every 5 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
+    const imageInterval = setInterval(() => {
+      setCurrentImageIndex((prev) => 
+        (prev + 1) % siteConfig.hero.images.length
+      );
+    }, 5000);
+
+    return () => clearInterval(imageInterval);
+  }, []);
+
+  // Change text every 4 seconds (independent from images)
+  useEffect(() => {
+    const textInterval = setInterval(() => {
       setCurrentTextIndex((prev) => 
         (prev + 1) % siteConfig.hero.animatedTexts.length
       );
-    }, 4000); // Change text every 4 seconds
+    }, 4000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(textInterval);
   }, []);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Video Background */}
+      {/* Image Carousel Background */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src={siteConfig.hero.videoUrl} type="video/mp4" />
-        </video>
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentImageIndex}
+            src={siteConfig.hero.images[currentImageIndex]}
+            alt={`Panadería artesanal ${currentImageIndex + 1}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
+          />
+        </AnimatePresence>
       </div>
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50 z-10" />
+      <div className="absolute inset-0 bg-black/40 z-10" />
 
       {/* Centered Content */}
       <div className="relative z-20 h-full flex flex-col items-center justify-center px-4">
@@ -38,12 +55,17 @@ export default function Hero() {
           <span className="block mb-2">PanMas</span>
           <div className="h-24 md:h-32 lg:h-40 flex items-center justify-center">
             {siteConfig.hero.animatedTexts.map((text, index) => (
-              <span
+              <motion.span
                 key={index}
-                className={`absolute transition-opacity duration-1000 ${
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: index === currentTextIndex ? 1 : 0,
+                }}
+                transition={{ duration: 1, ease: 'easeInOut' }}
+                className={`absolute ${
                   index === currentTextIndex
-                    ? 'opacity-100'
-                    : 'opacity-0 pointer-events-none'
+                    ? 'pointer-events-auto'
+                    : 'pointer-events-none'
                 }`}
                 style={{
                   maxWidth: '90vw',
@@ -51,7 +73,7 @@ export default function Hero() {
                 }}
               >
                 {text}
-              </span>
+              </motion.span>
             ))}
           </div>
         </h1>
@@ -59,4 +81,3 @@ export default function Hero() {
     </section>
   );
 }
-

@@ -11,7 +11,11 @@ export const siteConfig = {
     },
   },
   hero: {
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-freshly-baked-bread-2321-large.mp4",
+    images: [
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1920&q=80",
+      "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1920&q=80",
+      "https://images.unsplash.com/photo-1608198093002-ed4e0036ece1?w=1920&q=80",
+    ],
     animatedTexts: [
       "El arte de la paciencia en cada hogaza.",
       "Fermentación natural de 24 horas.",
