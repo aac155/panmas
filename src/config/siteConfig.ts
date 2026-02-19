@@ -22,17 +22,17 @@ export const siteConfig = {
     slides: [
       {
         id: 1,
-        image: "img/M1.jepg",
+        image: "img/M1.jpeg",
         text: "Ingredientes Puros: Solo agua, harina y sal.",
       },
       {
         id: 2,
-        image: "img/M2.jepg",
+        image: "img/M2.jpeg",
         text: "Tiempo y Cuidado: 24 horas de reposo natural.",
       },
       {
         id: 3,
-        image: "img/M3.jepg",
+        image: "img/M3.jpeg",
         text: "Sabor Ancestral: La corteza perfecta existe.",
       },
     ],
@@ -45,7 +45,7 @@ export const siteConfig = {
       description: "Nuestro pan estrella. Fermentación natural de 24 horas con masa madre cultivada artesanalmente.",
       price: 85,
       currency: "MXN",
-      image: "img/M4.jepg",
+      image: "img/M4.jpeg",
     },
     {
       id: "baguette",
@@ -54,7 +54,7 @@ export const siteConfig = {
       description: "Corteza crujiente y miga aireada. La auténtica baguette francesa horneada a diario.",
       price: 65,
       currency: "MXN",
-      image: "img/M5.jepg",
+      image: "img/M5.jpeg",
     },
     {
       id: "focaccia",
@@ -63,7 +63,7 @@ export const siteConfig = {
       description: "Aceite de oliva extra virgen, sal marina y hierbas frescas. Un viaje a Italia en cada bocado.",
       price: 95,
       currency: "MXN",
-      image: "img/M6.jepg",
+      image: "img/M6.jpeg",
     },
   ],
   bakery: {
